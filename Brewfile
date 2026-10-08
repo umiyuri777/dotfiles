@@ -16,7 +16,7 @@ brew "ghq"
 
 # --- Runtime / Package manager ---
 brew "mise"    # node / ruby / python / go は mise で管理（home/.config/mise/config.toml）
-brew "libyaml" # mise で ruby をビルドするのに必要
+brew "libyaml" # ビルド済みバイナリがない古い ruby を mise でビルドするときに必要
 brew "uv"
 brew "pnpm"
 

@@ -19,6 +19,13 @@ pass() { printf '  \033[32mok\033[0m  %s\n' "$*"; }
 fail() { printf '  \033[31mNG\033[0m  %s\n' "$*"; failures=$((failures + 1)); }
 indent() { sed 's/^/        /'; }
 
+# 疑似端末の中でログインシェル + 対話シェルの zsh を起動する
+# （CI には端末がなく、そのままだと zle が使えないため実際のターミナルと挙動が変わる）
+zsh_tty() {
+  script -q /dev/null zsh -l -i -c "$1" </dev/null 2>&1 |
+    LC_ALL=C sed -e $'s/\\^D\b\b//g' -e $'s/\r$//'
+}
+
 for brew in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   if [[ -x $brew ]]; then
     eval "$($brew shellenv)"
@@ -51,15 +58,16 @@ fi
 
 # ------------------------------------------------------------
 section "zsh"
-if err=$(zsh -l -i -c exit 2>&1 >/dev/null) && [[ -z $err ]]; then
+out=$(zsh_tty exit)
+if [[ -z $out ]]; then
   pass "エラーや警告なしで起動する"
 else
   fail "起動時にエラーや警告が出る"
-  echo "$err" | indent
+  echo "$out" | indent
 fi
 
-# ログインシェル + 対話シェルの中で確認し、結果を "pass:..." / "fail:..." の行で返す
-results=$(zsh -l -i -c '
+# zsh の中で確認し、結果を "pass:..." / "fail:..." の行で返す
+results=$(zsh_tty '
   # 対話シェルでプロンプトが出るたびに走るフック（mise の PATH 切り替えなど）を一度実行する
   for f in $precmd_functions; do $f; done
 
@@ -92,7 +100,7 @@ results=$(zsh -l -i -c '
   else
     echo "fail:git の user.name が設定されていない"
   fi
-' 2>&1)
+')
 
 while IFS= read -r line; do
   case "$line" in

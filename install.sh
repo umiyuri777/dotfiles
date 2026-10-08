@@ -54,6 +54,15 @@ if ! $link_only; then
     brew bundle --file="$DOTFILES_DIR/Brewfile.optional" ||
       warn "Brewfile.optional の一部のインストールに失敗しました（上のログを確認してください）"
   fi
+
+  # 補完関数のディレクトリが group / other から書き込み可能だと、compinit が警告を出して止まる
+  info "zsh の補完ディレクトリの権限を確認します"
+  zsh -c 'fpath=($HOMEBREW_PREFIX/share/zsh-completions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+          autoload -Uz compaudit && compaudit' 2>/dev/null |
+    while IFS= read -r dir; do
+      echo "  chmod g-w,o-w $dir"
+      chmod g-w,o-w "$dir" || warn "$dir の権限を変更できませんでした"
+    done
 fi
 
 info "シンボリックリンクを作成します"

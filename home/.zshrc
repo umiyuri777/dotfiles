@@ -58,7 +58,8 @@ if [[ -n $HOMEBREW_PREFIX ]]; then
 fi
 
 # fzf（Ctrl-R: 履歴検索 / Ctrl-T: ファイル検索 / Alt-C: ディレクトリ移動）
-if (( $+commands[fzf] )); then
+# 端末がないとき（IDE がシェルの環境変数を読み込むときなど）は zle が使えずエラーになるので読み込まない
+if (( $+commands[fzf] )) && [[ -o zle ]]; then
   source <(fzf --zsh)
 fi
 
