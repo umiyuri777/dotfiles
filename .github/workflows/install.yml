@@ -31,11 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # ランナーには formula 版の azure-cli が最初から入っていて、cask 版と az コマンドがぶつかる
-      - name: Remove preinstalled azure-cli formula
-        if: matrix.name == 'optional'
-        run: brew uninstall --formula --force azure-cli || true
-
       - name: install.sh
         run: ./install.sh ${{ matrix.args }}
 
