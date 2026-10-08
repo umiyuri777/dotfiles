@@ -1,0 +1,15 @@
+[user]
+	name = umiyuri777
+	email = yuseiai15@gmail.com
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[push]
+	default = current
+# マシン固有の設定（仕事用の email など）は ~/.gitconfig.local に書く
+[include]
+	path = ~/.gitconfig.local

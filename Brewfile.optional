@@ -1,0 +1,48 @@
+# 特定の案件・授業で使うもの。必要なマシンだけ入れる
+#   ./install.sh --optional
+#   brew bundle --file=Brewfile.optional
+
+# --- Cloud / Infra ---
+brew "awscli"
+cask "azure-cli"
+brew "doctl"
+brew "k6"
+cask "gcloud-cli"
+cask "ngrok"
+
+# --- Database ---
+brew "mysql-client"
+brew "mysql@8.0"
+brew "postgresql@14"
+brew "tbls"
+
+# --- Language / Build ---
+brew "openjdk@11"
+brew "openjdk@17"
+brew "kotlin"
+brew "gradle"
+brew "dotnet"
+brew "php"
+brew "golangci-lint"
+
+# --- Mobile ---
+brew "cocoapods"
+brew "watchman"
+cask "android-studio"
+
+# --- Docs / Media ---
+brew "pandoc"
+brew "graphviz"
+brew "ffmpeg"
+brew "jsonnet"
+cask "mactex"
+
+# --- Other ---
+brew "git-filter-repo"
+cask "postman"
+cask "unity-hub"
+cask "background-music"
+
+# --- Mac App Store（事前に App Store へのサインインが必要） ---
+brew "mas"
+mas "Xcode", id: 497799835
