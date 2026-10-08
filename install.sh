@@ -45,6 +45,9 @@ if ! $link_only; then
     fi
   done
 
+  info "brew update"
+  brew update
+
   info "brew bundle: Brewfile"
   brew bundle --file="$DOTFILES_DIR/Brewfile" ||
     warn "Brewfile の一部のインストールに失敗しました（上のログを確認してください）"
@@ -57,8 +60,9 @@ if ! $link_only; then
 
   # 補完関数のディレクトリが group / other から書き込み可能だと、compinit が警告を出して止まる
   info "zsh の補完ディレクトリの権限を確認します"
-  zsh -c 'fpath=($HOMEBREW_PREFIX/share/zsh-completions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
-          autoload -Uz compaudit && compaudit' 2>/dev/null |
+  # compaudit は問題のあるディレクトリを見つけると終了コード 1 を返すので、それで止まらないようにする
+  { zsh -c 'fpath=($HOMEBREW_PREFIX/share/zsh-completions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+            autoload -Uz compaudit && compaudit' 2>/dev/null || true; } |
     while IFS= read -r dir; do
       echo "  chmod g-w,o-w $dir"
       chmod g-w,o-w "$dir" || warn "$dir の権限を変更できませんでした"
