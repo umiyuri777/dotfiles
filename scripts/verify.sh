@@ -57,6 +57,15 @@ else
 fi
 
 # ------------------------------------------------------------
+section "macOS の設定"
+while IFS= read -r line; do
+  case "$line" in
+    pass:*) pass "${line#pass:}" ;;
+    fail:*) fail "${line#fail:}" ;;
+  esac
+done < <("$DOTFILES_DIR/scripts/macos.sh" --check)
+
+# ------------------------------------------------------------
 section "zsh"
 out=$(zsh_tty exit)
 if [[ -z $out ]]; then

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Mac の開発環境をセットアップする
-#   ./install.sh              Homebrew → Brewfile → シンボリックリンク → mise
+#   ./install.sh              Homebrew → Brewfile → シンボリックリンク → mise → macOS の設定
 #   ./install.sh --optional   Brewfile.optional も入れる
 #   ./install.sh --link-only  シンボリックリンクだけ張り直す
 set -euo pipefail
@@ -75,6 +75,9 @@ info "シンボリックリンクを作成します"
 if ! $link_only; then
   info "mise install"
   (cd "$HOME" && mise install)
+
+  info "macOS の設定を変更します"
+  "$DOTFILES_DIR/scripts/macos.sh"
 fi
 
 info "完了しました。新しいシェルを開いてください: exec zsh -l"
