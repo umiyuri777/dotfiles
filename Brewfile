@@ -30,8 +30,6 @@ brew "yq"
 # --- Terminal / Editor ---
 cask "ghostty"
 cask "visual-studio-code"
-cask "cursor"
-cask "zed"
 cask "docker-desktop"
 
 # --- Utility ---
@@ -40,7 +38,6 @@ cask "karabiner-elements"
 cask "rectangle"
 cask "alt-tab"
 cask "maccy"
-cask "scroll-reverser"
 
 # --- App ---
 cask "arc"
@@ -50,6 +47,4 @@ cask "discord"
 cask "notion"
 cask "notion-calendar"
 cask "obsidian"
-cask "localsend"
-cask "tailscale-app"
 cask "spotify"
