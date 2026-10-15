@@ -1,0 +1,38 @@
+name: install
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  schedule:
+    # 毎週月曜 9:00 (JST)。cask の改名・廃止などを早めに検知する
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+jobs:
+  install:
+    name: install (${{ matrix.name }})
+    runs-on: macos-26
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: core
+            args: ""
+          - name: optional
+            args: --optional
+    env:
+      # mise が GitHub API を使うときのレート制限対策
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HOMEBREW_NO_ENV_HINTS: 1
+      # Xcode (Mac App Store) は Apple ID でのサインインが必要なので CI では入れない
+      HOMEBREW_BUNDLE_MAS_SKIP: "497799835"
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: install.sh
+        run: ./install.sh ${{ matrix.args }}
+
+      - name: verify.sh
+        run: scripts/verify.sh ${{ matrix.args }}

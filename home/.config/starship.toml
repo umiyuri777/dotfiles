@@ -1,0 +1,60 @@
+continuation_prompt = '[❯❯ ](fg:blue)'
+
+[directory]
+style = "fg:blue"
+format = "[$path]($style)"
+truncation_length = 4
+truncation_symbol = "..."
+truncate_to_repo = false
+
+[character]
+success_symbol = '[❯❯❯](fg:blue)'
+error_symbol = '[❯❯❯](fg:red)'
+
+
+[git_status]
+style = "fg:blue"
+format = '([\[$all_status$ahead_behind\]]($style))'
+
+
+[git_branch]
+format = " [$symbol $branch]($style)"
+style = "fg:#888888"
+symbol = ""
+
+
+[git_metrics]
+disabled = false
+added_style = 'bold blue'
+format = '\([+$added]($added_style)/[-$deleted]($deleted_style)\)'
+only_nonzero_diffs = true
+
+
+[package]
+disabled = true
+
+
+[nodejs]
+style = "#ffc0cb"
+format = " [$symbol $version]($style)"
+symbol = ''
+
+
+[python]
+detect_extensions = ['py', 'ipynb']
+pyenv_version_name = true
+style = "yellow"
+format = ' [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+
+[java]
+format = ' [${symbol}(${version} )]($style)'
+
+
+[cmd_duration]
+show_milliseconds = true
+format = ' [󱫌 $duration]($style)'
+#min_time = 10
+
+[gcloud]
+format = ' on [$symbol$account(@$domain)(\($region\))]($style)'

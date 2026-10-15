@@ -1,0 +1,39 @@
+theme = Dracula
+
+# フォントを読みやすくする
+font-family = Osaka
+font-thicken
+
+# 背景はちょっと透過している黒
+background = 000
+background-opacity = 0.70
+
+# タイピング中はマウスカーソルを非表示にする
+mouse-hide-while-typing
+
+# はじめにtmuxを起動する
+# command = /opt/homebrew/bin/tmux
+
+# コマンドが終了したら表示内容を確認しておきたい
+wait-after-command = true
+
+# メニューバーのタイトルを非表示にする
+title = " "
+
+window-padding-x = 20
+window-padding-y = 20
+
+
+# ショートカットキーで表示・非表示を切り替え
+keybind = global:cmd+shift+ctrl+space=toggle_visibility
+
+
+# クイックターミナルの設定
+quick-terminal-animation-duration = 0
+
+# クイックターミナルの大きさ
+quick-terminal-size = 100%, 100%
+
+# クイックターミナルのショートカットを設定
+keybind = global:cmd+shift+ctrl+@=toggle_quick_terminal
+
