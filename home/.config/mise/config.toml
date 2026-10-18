@@ -1,0 +1,9 @@
+[tools]
+node = "24"
+ruby = "3"
+python = "3.14"
+go = "latest"
+
+[settings]
+# nvm / rbenv から移行したので、プロジェクトの .nvmrc / .node-version / .ruby-version も読む
+idiomatic_version_file_enable_tools = ["node", "ruby"]

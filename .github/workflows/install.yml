@@ -1,0 +1,27 @@
+name: install
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  schedule:
+    # 毎週月曜 9:00 (JST)。cask の改名・廃止などを早めに検知する
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      # mise が GitHub API を使うときのレート制限対策
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HOMEBREW_NO_ENV_HINTS: 1
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: install.sh
+        run: ./install.sh
+
+      - name: verify.sh
+        run: scripts/verify.sh

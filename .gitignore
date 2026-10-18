@@ -1,0 +1,5 @@
+.DS_Store
+
+# ディレクトリごとリンクしているため、アプリが自動生成するものを除外
+home/.config/karabiner/automatic_backups/
+home/.config/zed/prompts/
