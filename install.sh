@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Mac の開発環境をセットアップする
 #   ./install.sh              Homebrew → Brewfile → シンボリックリンク → mise → macOS の設定
-#   ./install.sh --optional   Brewfile.optional も入れる
 #   ./install.sh --link-only  シンボリックリンクだけ張り直す
 set -euo pipefail
 
@@ -10,13 +9,11 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33mwarn:\033[0m %s\n' "$*" >&2; }
 
-with_optional=false
 link_only=false
 for arg in "$@"; do
   case "$arg" in
-    --optional) with_optional=true ;;
     --link-only) link_only=true ;;
-    -h | --help) sed -n '2,5p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h | --help) sed -n '2,4p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) warn "不明なオプション: $arg"; exit 1 ;;
   esac
 done
@@ -51,12 +48,6 @@ if ! $link_only; then
   info "brew bundle: Brewfile"
   brew bundle --file="$DOTFILES_DIR/Brewfile" ||
     warn "Brewfile の一部のインストールに失敗しました（上のログを確認してください）"
-
-  if $with_optional; then
-    info "brew bundle: Brewfile.optional"
-    brew bundle --file="$DOTFILES_DIR/Brewfile.optional" ||
-      warn "Brewfile.optional の一部のインストールに失敗しました（上のログを確認してください）"
-  fi
 
   # 補完関数のディレクトリが group / other から書き込み可能だと、compinit が警告を出して止まる
   info "zsh の補完ディレクトリの権限を確認します"

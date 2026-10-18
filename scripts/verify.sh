@@ -1,17 +1,8 @@
 #!/usr/bin/env bash
 # install.sh を実行したあとの状態を検証する（CI でも手元でも使う）
-#   scripts/verify.sh             Brewfile の内容を確認
-#   scripts/verify.sh --optional  Brewfile.optional も確認
 set -uo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-
-with_optional=false
-case "${1:-}" in
-  --optional) with_optional=true ;;
-  "") ;;
-  *) echo "usage: $0 [--optional]" >&2; exit 1 ;;
-esac
 
 failures=0
 section() { printf '\n\033[1m%s\033[0m\n' "$*"; }
@@ -35,16 +26,12 @@ done
 
 # ------------------------------------------------------------
 section "Homebrew"
-brewfiles=(Brewfile)
-$with_optional && brewfiles+=(Brewfile.optional)
-for f in "${brewfiles[@]}"; do
-  if out=$(brew bundle check --file="$DOTFILES_DIR/$f" --no-upgrade --verbose 2>&1); then
-    pass "$f のパッケージがすべて入っている"
-  else
-    fail "$f に入っていないパッケージがある"
-    echo "$out" | indent
-  fi
-done
+if out=$(brew bundle check --file="$DOTFILES_DIR/Brewfile" --no-upgrade --verbose 2>&1); then
+  pass "Brewfile のパッケージがすべて入っている"
+else
+  fail "Brewfile に入っていないパッケージがある"
+  echo "$out" | indent
+fi
 
 # ------------------------------------------------------------
 section "シンボリックリンク"

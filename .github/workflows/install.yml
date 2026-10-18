@@ -11,28 +11,17 @@ on:
 
 jobs:
   install:
-    name: install (${{ matrix.name }})
     runs-on: macos-26
-    timeout-minutes: 120
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: core
-            args: ""
-          - name: optional
-            args: --optional
+    timeout-minutes: 60
     env:
       # mise が GitHub API を使うときのレート制限対策
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       HOMEBREW_NO_ENV_HINTS: 1
-      # Xcode (Mac App Store) は Apple ID でのサインインが必要なので CI では入れない
-      HOMEBREW_BUNDLE_MAS_SKIP: "497799835"
     steps:
       - uses: actions/checkout@v5
 
       - name: install.sh
-        run: ./install.sh ${{ matrix.args }}
+        run: ./install.sh
 
       - name: verify.sh
-        run: scripts/verify.sh ${{ matrix.args }}
+        run: scripts/verify.sh

@@ -13,7 +13,6 @@ cd ~/programming/dotfiles
 | コマンド | 内容 |
 |---|---|
 | `./install.sh` | Homebrew → `Brewfile` → シンボリックリンク → `mise install` → macOS の設定 |
-| `./install.sh --optional` | 上に加えて `Brewfile.optional`（案件・授業用）も入れる |
 | `./install.sh --link-only` | シンボリックリンクだけ張り直す |
 | `scripts/link.sh -n` | リンクで何が起きるかを確認する（dry-run） |
 | `scripts/macos.sh` | macOS の設定だけ反映する |
@@ -24,7 +23,6 @@ cd ~/programming/dotfiles
 ## 構成
 
 - `Brewfile` … どのマシンにも入れるもの
-- `Brewfile.optional` … 特定の案件・授業で使うもの
 - `home/` … `$HOME` と同じ構成で置き、`scripts/link.sh` が `$HOME` の同じ場所へリンクする
   - `.config/karabiner` と `.config/zed` はアプリが設定ファイルを置き換えて保存するので、ディレクトリごとリンクする
 
